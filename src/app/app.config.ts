@@ -57,12 +57,12 @@ export const appConfig: ApplicationConfig = {
                         label: 'English',
                     },
                     {
-                        id: 'tr',
-                        label: 'Turkish',
+                        id: 'es',
+                        label: 'Spanish',
                     },
                 ],
-                defaultLang: 'en',
-                fallbackLang: 'en',
+                defaultLang: 'es',
+                fallbackLang: 'es',
                 reRenderOnLangChange: true,
                 prodMode: true,
             },
@@ -91,7 +91,7 @@ export const appConfig: ApplicationConfig = {
             },
             fuse: {
                 layout: 'classic',
-                scheme: 'light',
+                scheme: 'dark',
                 screens: {
                     sm: '600px',
                     md: '960px',
