@@ -14,14 +14,14 @@
             <div
                 class="mt-8 text-4xl font-extrabold leading-tight tracking-tight"
             >
-                Sign up
+                Registrarse
             </div>
             <div class="mt-0.5 flex items-baseline font-medium">
-                <div>Already have an account?</div>
+                <div>¿Ya tienes cuenta?</div>
                 <a
                     class="ml-1 text-primary-500 hover:underline"
                     [routerLink]="['/sign-in']"
-                    >Sign in
+                    >Iniciar Sesión
                 </a>
             </div>
 
@@ -42,30 +42,64 @@
             <form class="mt-8" [formGroup]="signUpForm" #signUpNgForm="ngForm">
                 <!-- Name field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Full name</mat-label>
+                    <mat-label>Nombre Completo</mat-label>
                     <input id="name" matInput [formControlName]="'name'" />
                     @if (signUpForm.get('name').hasError('required')) {
-                        <mat-error> Full name is required </mat-error>
+                        <mat-error> El nombre completo es obligatorio </mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field
+                    [ngClass]="formFieldHelpers"
+                    class="w-full"
+                    [formControlName]="'documentType'"
+                >
+                    <mat-label>Tipo de documento</mat-label>
+                    <mat-select>
+                        <mat-option value="1"
+                        >CC</mat-option
+                        >
+                        <mat-option value="2"
+                        >CE</mat-option
+                        >
+                        <mat-option value="3"
+                        >NIT</mat-option
+                        >
+                    </mat-select>
+                    <mat-icon
+                        class="icon-size-5"
+                        matPrefix
+                        [svgIcon]="'heroicons_solid:identification'"
+                    ></mat-icon>
+                    @if (signUpForm.get('documentType').hasError('required')) {
+                        <mat-error> El tipo de documento es obligatorio </mat-error>
+                    }
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Número de documento</mat-label>
+                    <input id="document" matInput [formControlName]="'document'" />
+                    @if (signUpForm.get('document').hasError('required')) {
+                        <mat-error> El número de documento es obligatorio </mat-error>
                     }
                 </mat-form-field>
 
                 <!-- Email field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Email address</mat-label>
+                    <mat-label>Correo</mat-label>
                     <input id="email" matInput [formControlName]="'email'" />
                     @if (signUpForm.get('email').hasError('required')) {
-                        <mat-error> Email address is required </mat-error>
+                        <mat-error> El correo es obligatorio </mat-error>
                     }
                     @if (signUpForm.get('email').hasError('email')) {
                         <mat-error>
-                            Please enter a valid email address
+                            Ingrese un correo válido
                         </mat-error>
                     }
                 </mat-form-field>
 
                 <!-- Password field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Password</mat-label>
+                    <mat-label>Contraseña</mat-label>
                     <input
                         id="password"
                         matInput
@@ -96,17 +130,7 @@
                             ></mat-icon>
                         }
                     </button>
-                    <mat-error> Password is required </mat-error>
-                </mat-form-field>
-
-                <!-- Company field -->
-                <mat-form-field class="w-full">
-                    <mat-label>Company</mat-label>
-                    <input
-                        id="company-confirm"
-                        matInput
-                        [formControlName]="'company'"
-                    />
+                    <mat-error> La contraseña es obligatoria </mat-error>
                 </mat-form-field>
 
                 <!-- ToS and PP -->
@@ -116,17 +140,17 @@
                         [color]="'primary'"
                         [formControlName]="'agreements'"
                     >
-                        <span>I agree with</span>
+                        <span>Acepto los</span>
                         <a
                             class="ml-1 text-primary-500 hover:underline"
                             [routerLink]="['./']"
-                            >Terms
+                            >Términos y condiciones
                         </a>
-                        <span>and</span>
+                        <span>y la</span>
                         <a
                             class="ml-1 text-primary-500 hover:underline"
                             [routerLink]="['./']"
-                            >Privacy Policy
+                            >Política de privacidad
                         </a>
                     </mat-checkbox>
                 </div>
@@ -140,7 +164,7 @@
                     (click)="signUp()"
                 >
                     @if (!signUpForm.disabled) {
-                        <span> Create your free account </span>
+                        <span> Registrarse </span>
                     }
                     @if (signUpForm.disabled) {
                         <mat-progress-spinner

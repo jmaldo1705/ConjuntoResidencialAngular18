@@ -27,7 +27,7 @@ export const shortcuts = [
     {
         id: '3c48e75e-2ae7-4b73-938a-12dc655be28b',
         label: 'Dashboard',
-        description: 'User analytics',
+        description: 'user.model.ts analytics',
         icon: 'heroicons_outline:chart-pie',
         link: '/dashboards/analytics',
         useRouter: true,

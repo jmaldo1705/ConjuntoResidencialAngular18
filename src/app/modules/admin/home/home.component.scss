@@ -1,0 +1,11 @@
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.dashboard-card {
+    width: 45%;
+    // Estilos adicionales para las tarjetas
+}

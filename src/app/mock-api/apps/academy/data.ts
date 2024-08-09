@@ -174,10 +174,10 @@ export const courses = [
     },
     {
         id: 'fcbfedbf-6187-4b3b-89d3-1a7cb4e11616',
-        title: 'Personalize Your iOS App with Firebase User Management',
+        title: 'Personalize Your iOS App with Firebase user.model.ts Management',
         slug: 'personalize-your-ios-app-with-firebase-user-management',
         description:
-            'Dive deep into User Management on iOS apps using Firebase',
+            'Dive deep into user.model.ts Management on iOS apps using Firebase',
         category: 'firebase',
         duration: 90,
         totalSteps: 11,

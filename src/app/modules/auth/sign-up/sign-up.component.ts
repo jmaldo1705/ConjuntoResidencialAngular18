@@ -17,6 +17,9 @@ import { Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'auth-sign-up',
@@ -35,9 +38,14 @@ import { AuthService } from 'app/core/auth/auth.service';
         MatIconModule,
         MatCheckboxModule,
         MatProgressSpinnerModule,
+        MatOption,
+        MatSelect,
+        NgClass,
     ],
 })
 export class AuthSignUpComponent implements OnInit {
+
+    formFieldHelpers: string[] = [''];
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
@@ -67,6 +75,8 @@ export class AuthSignUpComponent implements OnInit {
         // Create the form
         this.signUpForm = this._formBuilder.group({
             name: ['', Validators.required],
+            documentType: ['', Validators.required],
+            document: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required],
             company: [''],
