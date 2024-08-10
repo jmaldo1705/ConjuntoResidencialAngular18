@@ -1,26 +1,39 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UsersService {
-    constructor(private http: HttpClient) { }
+    private _data: BehaviorSubject<any> = new BehaviorSubject(null);
 
-    getUsers(): Observable<any> {
-        return this.http.get('/api/users');
+    /**
+     * Constructor
+     */
+    constructor(private _httpClient: HttpClient) {}
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Accessors
+    // -----------------------------------------------------------------------------------------------------
+
+    /**
+     * Getter for data
+     */
+    get data$(): Observable<any> {
+        return this._data.asObservable();
     }
 
-    addUser(user: any): Observable<any> {
-        return this.http.post('/api/users', user);
-    }
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
 
-    updateUser(id: number, user: any): Observable<any> {
-        return this.http.put(`/api/users/${id}`, user);
-    }
-
-    deleteUser(id: number): Observable<any> {
-        return this.http.delete(`/api/users/${id}`);
+    /**
+     * Get data
+     */
+    getData(): Observable<any> {
+        return this._httpClient.get('api/dashboards/finance').pipe(
+            tap((response: any) => {
+                this._data.next(response);
+            })
+        );
     }
 }

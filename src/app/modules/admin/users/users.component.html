@@ -1,80 +1,180 @@
 <div class="flex min-w-0 flex-auto flex-col">
     <!-- Main -->
     <div class="flex-auto p-6 sm:p-10">
-        <div class="max-w-3xl">
-            <div class="prose prose-sm max-w-3xl">
+        <div>
+            <div class="prose prose-sm">
                 <h2>Gestión de usuarios</h2>
                 <p>
                     Todos los campos son obligatorios
                 </p>
             </div>
 
-            <form
-                class="bg-card mt-8 flex flex-col overflow-hidden rounded-2xl p-8 pb-4 shadow"
+            <div
+                class="bg-card flex flex-auto flex-col overflow-hidden rounded-2xl shadow xl:col-span-2"
             >
-                <div class="gt-xs:flex-row flex flex-col">
-                    <mat-form-field
-                        [ngClass]="formFieldHelpers"
-                        class="gt-xs:pr-3 flex-auto"
-                    >
-                        <mat-label>Nombre</mat-label>
-                        <input matInput />
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:user-circle'"
-                        ></mat-icon>
-                    </mat-form-field>
-                    <mat-form-field
-                        [ngClass]="formFieldHelpers"
-                        class="gt-xs:pr-3 flex-auto"
-                    >
-                        <mat-label>Tipo de documento</mat-label>
-                        <mat-select>
-                            <mat-option value="1"
-                            >CC</mat-option
-                            >
-                            <mat-option value="2"
-                            >CE</mat-option
-                            >
-                            <mat-option value="3"
-                            >NIT</mat-option
-                            >
-                        </mat-select>
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:identification'"
-                        ></mat-icon>
-                    </mat-form-field>
+                <div
+                    class="relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8"
+                >
+                    <!-- Loader -->
+                    @if (isLoading) {
+                        <div class="absolute inset-x-0 bottom-0">
+                            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+                        </div>
+                    }
+                    <!-- Title -->
+                    <div class="text-4xl font-extrabold tracking-tight">Usuarios</div>
+                    <!-- Actions -->
+                    <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
+                        <!-- Search -->
+                        <mat-form-field
+                            class="fuse-mat-dense fuse-mat-rounded min-w-64"
+                            [subscriptSizing]="'dynamic'"
+                        >
+                            <mat-icon
+                                class="icon-size-5"
+                                matPrefix
+                                [svgIcon]="'heroicons_solid:magnifying-glass'"
+                            ></mat-icon>
+                            <input
+                                matInput
+                                [formControl]="searchInputControl"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Buscar usuarios'"
+                            />
+                        </mat-form-field>
+                        <!-- Add product button -->
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+
+                        >
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2 mr-1">Agregar</span>
+                        </button>
+                    </div>
                 </div>
-                <div class="gt-md:flex-row flex flex-col">
-                    <mat-form-field
-                        [ngClass]="formFieldHelpers"
-                        class="gt-md:pr-3 flex-auto"
+                <div class="mx-6 overflow-x-auto">
+                    <table
+                        class="w-full bg-transparent"
+                        mat-table
+                        matSort
+                        [dataSource]="recentTransactionsDataSource"
+                        [trackBy]="trackByFn"
+                        #recentTransactionsTable
                     >
-                        <mat-label>Número de documento</mat-label>
-                        <input matInput />
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:identification'"
-                        ></mat-icon>
-                    </mat-form-field>
-                    <mat-form-field
-                        [ngClass]="formFieldHelpers"
-                        class="gt-md:pl-3 flex-auto"
-                    >
-                        <mat-label>Correo electrónico</mat-label>
-                        <input matInput />
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:envelope'"
-                        ></mat-icon>
-                    </mat-form-field>
+                        <!-- Transaction ID -->
+                        <ng-container matColumnDef="transactionId">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Transaction ID
+                            </th>
+                            <td mat-cell *matCellDef="let transaction">
+                                <span
+                                    class="text-secondary whitespace-nowrap pr-6 text-sm font-medium"
+                                >
+                                    {{ transaction.transactionId }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Date -->
+                        <ng-container matColumnDef="date">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Date
+                            </th>
+                            <td mat-cell *matCellDef="let transaction">
+                                <span class="whitespace-nowrap pr-6">
+                                    {{ transaction.date | date: 'MMM dd, y' }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Name -->
+                        <ng-container matColumnDef="name">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Name
+                            </th>
+                            <td mat-cell *matCellDef="let transaction">
+                                <span class="whitespace-nowrap pr-6">
+                                    {{ transaction.name }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Amount -->
+                        <ng-container matColumnDef="amount">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Amount
+                            </th>
+                            <td mat-cell *matCellDef="let transaction">
+                                <span
+                                    class="whitespace-nowrap pr-6 font-medium"
+                                >
+                                    {{ transaction.amount | currency: 'USD' }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Status -->
+                        <ng-container matColumnDef="status">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Status
+                            </th>
+                            <td mat-cell *matCellDef="let transaction">
+                                <span
+                                    class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
+                                    [ngClass]="{
+                                        'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
+                                            transaction.status === 'pending',
+                                        'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
+                                            transaction.status === 'completed',
+                                    }"
+                                >
+                                    <span
+                                        class="whitespace-nowrap leading-relaxed"
+                                    >{{ transaction.status }}</span
+                                    >
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="recentTransactionsTableColumns"
+                        ></tr>
+                        <tr
+                            class="order-row h-16"
+                            mat-row
+                            *matRowDef="
+                                let row;
+                                columns: recentTransactionsTableColumns
+                            "
+                        ></tr>
+                    </table>
                 </div>
-            </form>
+                <!-- Paginador -->
+                <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+            </div>
         </div>
     </div>
 </div>
