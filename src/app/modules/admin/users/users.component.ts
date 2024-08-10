@@ -17,9 +17,9 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { UsersService } from 'app/modules/admin/users/users.service';
 import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
-import { Subject, takeUntil } from 'rxjs';
+import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { MatFormField } from '@angular/material/form-field';
-import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 
@@ -73,16 +73,15 @@ function getSpanishPaginatorIntl() {
     ],
 })
 export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild('recentTransactionsTable', { read: MatSort })
-    recentTransactionsTableMatSort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
+    searchInputControl = new FormControl();
     isLoading: boolean = false;
-    searchInputControl: UntypedFormControl = new UntypedFormControl();
     data: any;
     accountBalanceOptions: ApexOptions;
     recentTransactionsDataSource: MatTableDataSource<any> =
         new MatTableDataSource();
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    recentTransactionsTableColumns: string[] = [
+    usersTableColumns: string[] = [
         'transactionId',
         'date',
         'name',
@@ -125,9 +124,21 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
      * After view init
      */
     ngAfterViewInit(): void {
-        // Make the data source sortable
-        this.recentTransactionsDataSource.sort =
-            this.recentTransactionsTableMatSort;
+        // Agrega el ordenamiento
+        this.recentTransactionsDataSource.sort = this.sort;
+        //Conectar la paginación
+        this.recentTransactionsDataSource.paginator = this.paginator;
+        //Conectar el buscador
+        this.searchInputControl.valueChanges
+            .pipe(debounceTime(300)) // Espera 300ms después de que el usuario deje de escribir
+            .subscribe(value => {
+                this.recentTransactionsDataSource.filter = value.trim().toLowerCase();
+            });
+        // Configurar la función de filtro
+        this.recentTransactionsDataSource.filterPredicate = (data, filter) => {
+            const dataStr = Object.values(data).join(' ').toLowerCase();
+            return dataStr.includes(filter);
+        };
     }
 
     /**

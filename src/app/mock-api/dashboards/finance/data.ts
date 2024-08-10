@@ -1606,5 +1606,13 @@ export const finance = {
             status: 'completed',
             date: '2019-11-24T12:13:23.064Z',
         },
+        {
+            id: 'e5c9f0ed-a64c-4bfr-a113-29f80b4e162c',
+            transactionId: '123402213NT',
+            name: 'Jonathan Maldonado',
+            amount: +2027.43,
+            status: 'completed',
+            date: '2024-08-10T12:13:23.064Z',
+        },
     ],
 };

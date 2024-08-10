@@ -2,13 +2,6 @@
     <!-- Main -->
     <div class="flex-auto p-6 sm:p-10">
         <div>
-            <div class="prose prose-sm">
-                <h2>Gestión de usuarios</h2>
-                <p>
-                    Todos los campos son obligatorios
-                </p>
-            </div>
-
             <div
                 class="bg-card flex flex-auto flex-col overflow-hidden rounded-2xl shadow xl:col-span-2"
             >
@@ -61,7 +54,7 @@
                         matSort
                         [dataSource]="recentTransactionsDataSource"
                         [trackBy]="trackByFn"
-                        #recentTransactionsTable
+                        #usersTable
                     >
                         <!-- Transaction ID -->
                         <ng-container matColumnDef="transactionId">
@@ -160,14 +153,14 @@
 
                         <tr
                             mat-header-row
-                            *matHeaderRowDef="recentTransactionsTableColumns"
+                            *matHeaderRowDef="usersTableColumns"
                         ></tr>
                         <tr
                             class="order-row h-16"
                             mat-row
                             *matRowDef="
                                 let row;
-                                columns: recentTransactionsTableColumns
+                                columns: usersTableColumns
                             "
                         ></tr>
                     </table>
