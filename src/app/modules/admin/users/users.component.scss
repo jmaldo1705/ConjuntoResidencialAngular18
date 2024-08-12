@@ -1,0 +1,22 @@
+.mat-icon.icon-hover.edit:hover {
+    color: #1e90ff !important;
+}
+
+.mat-icon.icon-hover.delete:hover {
+    color: #ff4d4d !important;
+}
+
+.mat-icon.icon-hover {
+    cursor: pointer !important;
+}
+
+.custom-dialog-container {
+    padding: 0 !important;  // Quita padding adicional en móviles
+
+    @media (max-width: 600px) {
+        .mat-dialog-container {
+            padding: 1rem;  // Agrega padding interno para mejor visualización
+            border-radius: 8px;  // Redondea los bordes del diálogo
+        }
+    }
+}

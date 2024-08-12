@@ -1,80 +1,20 @@
-<div class="flex min-w-0 flex-auto flex-col">
-    <!-- Main -->
-    <div class="flex-auto p-6 sm:p-10">
-        <div class="max-w-3xl">
-            <div class="prose prose-sm max-w-3xl">
-                <h2>Agregar usuario</h2>
-                <p>
-                    Todos los campos son obligatorios
-                </p>
-            </div>
-
-            <form
-                class="bg-card mt-8 flex flex-col overflow-hidden rounded-2xl p-8 pb-4 shadow"
-            >
-                <div class="gt-xs:flex-row flex flex-col">
-                    <mat-form-field
-                        [ngClass]="formFieldHelpers"
-                        class="gt-xs:pr-3 flex-auto"
-                    >
-                        <mat-label>Nombre</mat-label>
-                        <input matInput />
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:user-circle'"
-                        ></mat-icon>
-                    </mat-form-field>
-                    <mat-form-field
-                        [ngClass]="formFieldHelpers"
-                        class="gt-xs:pr-3 flex-auto"
-                    >
-                        <mat-label>Tipo de documento</mat-label>
-                        <mat-select>
-                            <mat-option value="1"
-                            >CC</mat-option
-                            >
-                            <mat-option value="2"
-                            >CE</mat-option
-                            >
-                            <mat-option value="3"
-                            >NIT</mat-option
-                            >
-                        </mat-select>
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:identification'"
-                        ></mat-icon>
-                    </mat-form-field>
-                </div>
-                <div class="gt-md:flex-row flex flex-col">
-                    <mat-form-field
-                        [ngClass]="formFieldHelpers"
-                        class="gt-md:pr-3 flex-auto"
-                    >
-                        <mat-label>Número de documento</mat-label>
-                        <input matInput />
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:identification'"
-                        ></mat-icon>
-                    </mat-form-field>
-                    <mat-form-field
-                        [ngClass]="formFieldHelpers"
-                        class="gt-md:pl-3 flex-auto"
-                    >
-                        <mat-label>Correo electrónico</mat-label>
-                        <input matInput />
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:envelope'"
-                        ></mat-icon>
-                    </mat-form-field>
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="flex justify-between items-center">
+    <h2 mat-dialog-title class="text-lg">{{action === 'edit' ? 'Editar Usuario' : 'Agregar Usuario'}}</h2>
+    <button mat-icon-button (click)="close()" class="text-gray-500">
+        <mat-icon>close</mat-icon>
+    </button>
 </div>
+<mat-dialog-content>
+    <form>
+        <!-- Campos del formulario -->
+        <mat-form-field class="w-full">
+            <mat-label>Nombre</mat-label>
+            <input matInput [(ngModel)]="user.name" name="name">
+        </mat-form-field>
+        <!-- Agrega otros campos según sea necesario -->
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Cancelar</button>
+    <button mat-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>

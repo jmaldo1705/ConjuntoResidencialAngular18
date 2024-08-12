@@ -25,7 +25,6 @@
                         >
                             <mat-icon
                                 class="icon-size-5"
-                                matPrefix
                                 [svgIcon]="'heroicons_solid:magnifying-glass'"
                             ></mat-icon>
                             <input
@@ -40,8 +39,7 @@
                             class="ml-4"
                             mat-flat-button
                             [color]="'primary'"
-
-                        >
+                            (click)="addUser()">
                             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                             <span class="ml-2 mr-1">Agregar</span>
                         </button>
@@ -56,97 +54,166 @@
                         [trackBy]="trackByFn"
                         #usersTable
                     >
-                        <!-- Transaction ID -->
-                        <ng-container matColumnDef="transactionId">
+                        <ng-container matColumnDef="nombre">
                             <th
                                 mat-header-cell
                                 mat-sort-header
                                 *matHeaderCellDef
                             >
-                                Transaction ID
+                                Nombre
                             </th>
-                            <td mat-cell *matCellDef="let transaction">
+                            <td mat-cell *matCellDef="let user">
                                 <span
-                                    class="text-secondary whitespace-nowrap pr-6 text-sm font-medium"
+                                    class="whitespace-nowrap pr-6"
                                 >
-                                    {{ transaction.transactionId }}
+                                    {{ user.nombre }}
                                 </span>
                             </td>
                         </ng-container>
 
-                        <!-- Date -->
-                        <ng-container matColumnDef="date">
+                        <ng-container matColumnDef="tipoDocumento">
                             <th
                                 mat-header-cell
                                 mat-sort-header
                                 *matHeaderCellDef
                             >
-                                Date
+                                Tipo de documento
                             </th>
-                            <td mat-cell *matCellDef="let transaction">
+                            <td mat-cell *matCellDef="let user">
                                 <span class="whitespace-nowrap pr-6">
-                                    {{ transaction.date | date: 'MMM dd, y' }}
+                                    {{ user.tipoDocumento}}
                                 </span>
                             </td>
                         </ng-container>
 
-                        <!-- Name -->
-                        <ng-container matColumnDef="name">
+                        <ng-container matColumnDef="numeroDocumento">
                             <th
                                 mat-header-cell
                                 mat-sort-header
                                 *matHeaderCellDef
                             >
-                                Name
+                                Número de documento
                             </th>
-                            <td mat-cell *matCellDef="let transaction">
+                            <td mat-cell *matCellDef="let user">
                                 <span class="whitespace-nowrap pr-6">
-                                    {{ transaction.name }}
+                                    {{ user.numeroDocumento }}
                                 </span>
                             </td>
                         </ng-container>
 
-                        <!-- Amount -->
-                        <ng-container matColumnDef="amount">
+                        <ng-container matColumnDef="correo">
                             <th
                                 mat-header-cell
                                 mat-sort-header
                                 *matHeaderCellDef
                             >
-                                Amount
+                                Correo electrónico
                             </th>
-                            <td mat-cell *matCellDef="let transaction">
+                            <td mat-cell *matCellDef="let user">
                                 <span
-                                    class="whitespace-nowrap pr-6 font-medium"
-                                >
-                                    {{ transaction.amount | currency: 'USD' }}
+                                    class="whitespace-nowrap pr-6">
+                                    {{ user.correo }}
                                 </span>
                             </td>
                         </ng-container>
 
-                        <!-- Status -->
-                        <ng-container matColumnDef="status">
+                        <ng-container matColumnDef="apartamento">
                             <th
                                 mat-header-cell
                                 mat-sort-header
                                 *matHeaderCellDef
                             >
-                                Status
+                                Apartamento
                             </th>
-                            <td mat-cell *matCellDef="let transaction">
+                            <td mat-cell *matCellDef="let user">
                                 <span
-                                    class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide"
-                                    [ngClass]="{
-                                        'bg-red-200 text-red-800 dark:bg-red-600 dark:text-red-50':
-                                            transaction.status === 'pending',
-                                        'bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50':
-                                            transaction.status === 'completed',
-                                    }"
-                                >
+                                    class="whitespace-nowrap pr-6">
+                                    {{ user.apartamento }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="torre">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Torre
+                            </th>
+                            <td mat-cell *matCellDef="let user">
+                                <span
+                                    class="whitespace-nowrap pr-6">
+                                    {{ user.torre }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="rol">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Rol
+                            </th>
+                            <td mat-cell *matCellDef="let user">
+                                <span
+                                    class="whitespace-nowrap pr-6">
+                                    {{ user.rol }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="estado">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Estado
+                            </th>
+                            <td mat-cell *matCellDef="let user">
                                     <span
                                         class="whitespace-nowrap leading-relaxed"
-                                    >{{ transaction.status }}</span
+                                    >@if (user.estado === 'activo') {
+                                        <mat-icon
+                                            class="text-green-400 icon-size-5"
+                                            [svgIcon]="'heroicons_solid:check'"
+                                        ></mat-icon>
+                                    }
+                                        @if (user.estado === 'inactivo') {
+                                            <mat-icon
+                                                class="text-gray-400 icon-size-5"
+                                                [svgIcon]="'heroicons_solid:x-mark'"
+                                            ></mat-icon>
+                                        }</span
                                     >
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="acciones">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Acciones
+                            </th>
+                            <td mat-cell *matCellDef="let user">
+                                <span
+                                    class="whitespace-nowrap pr-6 flex items-center">
+                                    <mat-icon
+                                        class="text-gray-400 icon-size-5 icon-hover edit"
+                                        svgIcon="heroicons_solid:pencil"
+                                        (click)="editUser(user)"
+                                        style="margin-right: 12px;">
+                                    </mat-icon>
+                                    <mat-icon
+                                        class="text-gray-400 icon-size-5 icon-hover delete"
+                                        svgIcon="heroicons_solid:trash"
+                                        (click)="deleteUser(user)">
+                                    </mat-icon>
                                 </span>
                             </td>
                         </ng-container>

@@ -1615,4 +1615,17 @@ export const finance = {
             date: '2024-08-10T12:13:23.064Z',
         },
     ],
+    users: [
+        {
+            nombre: 'Jonathan Maldonado',
+            tipoDocumento: 'CC',
+            numeroDocumento: '1011443578',
+            correo: 'jmaldonado1705@gmail.com',
+            apartamento: '907',
+            torre: '2',
+            rol: 'Residente',
+            estado: 'activo',
+        },
+
+    ],
 };

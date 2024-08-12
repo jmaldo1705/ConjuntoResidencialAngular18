@@ -26,6 +26,20 @@ export class UsersService {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
+    // Método para refrescar los datos
+    refreshData(): void {
+        this.getData().subscribe(); // Hacer la solicitud y actualizar la data
+    }
+
+    // Método para eliminar un usuario
+    deleteUser(userId: number): Observable<any> {
+        return this._httpClient.delete(`/api/users/${userId}`).pipe(
+            tap(() => {
+                this.refreshData(); // Refrescar los datos después de eliminar un usuario
+            })
+        );
+    }
+
     /**
      * Get data
      */
