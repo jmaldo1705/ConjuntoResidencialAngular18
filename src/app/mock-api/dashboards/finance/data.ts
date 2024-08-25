@@ -1628,4 +1628,23 @@ export const finance = {
         },
 
     ],
+    accounting: [
+        {
+            fecha: '22/08/2024',
+            descripcion: 'Pago de Administración 2-907',
+            tipo: 'Ingreso',
+            categoria: 'Pago de Administración',
+            monto: '207000',
+            estado: 'pendiente',
+        },
+        {
+            fecha: '01/02/2024',
+            descripcion: 'Pago a empresa de seguridad febrero',
+            tipo: 'Gasto',
+            categoria: 'Pago a empresa de seguridad',
+            monto: '20000000',
+            estado: 'pagado',
+        },
+
+    ],
 };

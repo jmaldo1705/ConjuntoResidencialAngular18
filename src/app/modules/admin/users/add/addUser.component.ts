@@ -11,6 +11,8 @@ import { MatFormField } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatInput, MatLabel } from '@angular/material/input';
+import { UsersService } from 'app/modules/admin/users/users.service';
+import { MatOption, MatSelect } from '@angular/material/select';
 
 @Component({
     selector: 'app-user-form',
@@ -27,6 +29,8 @@ import { MatInput, MatLabel } from '@angular/material/input';
         MatDialogTitle,
         MatInput,
         MatLabel,
+        MatSelect,
+        MatOption,
     ],
 })
 export class AddUserComponent {
@@ -35,7 +39,8 @@ export class AddUserComponent {
 
     constructor(
         public dialogRef: MatDialogRef<AddUserComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private userService: UsersService  // Inyecta el servicio de usuarios
     ) {
         this.action = data.action;  // 'add' o 'edit'
         this.user = data.user || {};  // Si es agregar, inicia con un objeto vacío
@@ -57,23 +62,15 @@ export class AddUserComponent {
 
     // Método para agregar un nuevo usuario
     private addUser(): void {
-        // Aquí llamas a tu servicio para agregar un nuevo usuario
-        // Ejemplo:
-        // this.userService.addUser(this.user).subscribe(response => {
-        //   this.dialogRef.close(response);  // Cierra el diálogo y envía los datos de vuelta
-        // });
-        console.log('Usuario agregado:', this.user);
-        this.dialogRef.close(this.user);  // Cierra el diálogo y retorna el usuario agregado
+        this.userService.addUser(this.user).subscribe(response => {
+            this.dialogRef.close(response);  // Cierra el diálogo y envía los datos de vuelta
+        });
     }
 
     // Método para actualizar un usuario existente
     private updateUser(): void {
-        // Aquí llamas a tu servicio para actualizar un usuario existente
-        // Ejemplo:
-        // this.userService.updateUser(this.user).subscribe(response => {
-        //   this.dialogRef.close(response);  // Cierra el diálogo y envía los datos de vuelta
-        // });
-        console.log('Usuario actualizado:', this.user);
-        this.dialogRef.close(this.user);  // Cierra el diálogo y retorna el usuario actualizado
+        this.userService.updateUser(this.user).subscribe(response => {
+            this.dialogRef.close(response);  // Cierra el diálogo y envía los datos de vuelta
+        });
     }
 }

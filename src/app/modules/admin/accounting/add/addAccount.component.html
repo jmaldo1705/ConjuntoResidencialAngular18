@@ -1,0 +1,60 @@
+<div class="flex justify-between items-center">
+    <h2 mat-dialog-title class="text-lg">{{action === 'edit' ? 'Editar Cuenta' : 'Agregar Cuenta'}}</h2>
+    <button mat-icon-button (click)="close()" class="text-gray-500">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <form>
+        <!-- Campo: Nombre -->
+        <mat-form-field class="w-full">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="accounting.fecha" name="fecha" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Campo: Tipo de Documento -->
+        <mat-form-field class="w-full">
+            <mat-label>Descripción</mat-label>
+            <input matInput [(ngModel)]="accounting.descripcion" name="descripcion" required>
+        </mat-form-field>
+
+        <!-- Campo: Número de Documento -->
+        <mat-form-field class="w-full">
+            <mat-label>Tipo</mat-label>
+            <mat-select [(ngModel)]="accounting.tipo" name="tipo" required>
+                <mat-option value="ingreso">Ingreso</mat-option>
+                <mat-option value="gasto">Gasto</mat-option>
+                <!-- Agrega más opciones según corresponda -->
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Campo: Correo -->
+        <mat-form-field class="w-full">
+            <mat-label>Categoría</mat-label>
+            <input matInput [(ngModel)]="accounting.categoria" name="categoria" required>
+        </mat-form-field>
+
+        <!-- Campo: Apartamento -->
+        <mat-form-field class="w-full">
+            <mat-label>Monto</mat-label>
+            <input matInput [(ngModel)]="accounting.monto" name="monto" required>
+        </mat-form-field>
+
+        <!-- Campo: Estado -->
+        <mat-form-field class="w-full">
+            <mat-label>Estado</mat-label>
+            <mat-select [(ngModel)]="accounting.estado" name="estado" required>
+                <mat-option value="pendiente">Pendiente</mat-option>
+                <mat-option value="pagado">Pagado</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Cancelar</button>
+    <button mat-button color="primary" (click)="save()">Guardar</button>
+</mat-dialog-actions>

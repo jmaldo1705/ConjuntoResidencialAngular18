@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class UsersService {
+export class AccountingService {
     private _data: BehaviorSubject<any> = new BehaviorSubject(null);
 
     /**
@@ -32,8 +32,8 @@ export class UsersService {
     }
 
     // Método para eliminar un usuario
-    deleteUser(userId: number): Observable<any> {
-        return this._httpClient.delete(`/api/users/${userId}`).pipe(
+    deleteAccount(accountId: number): Observable<any> {
+        return this._httpClient.delete(`/api/accounting/${accountId}`).pipe(
             tap(() => {
                 this.refreshData(); // Refrescar los datos después de eliminar un usuario
             })
@@ -51,11 +51,11 @@ export class UsersService {
         );
     }
 
-    addUser(user: any): Observable<any> {
-        return this._httpClient.post('/api/users', user);
+    addAccount(account: any): Observable<any> {
+        return this._httpClient.post('/api/accounting', account);
     }
 
-    updateUser(user: any): Observable<any> {
-        return this._httpClient.put(`/api/users/${user.id}`, user);
+    updateAccount(account: any): Observable<any> {
+        return this._httpClient.put(`/api/accounting/${account.id}`, account);
     }
 }

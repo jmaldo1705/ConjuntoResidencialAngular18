@@ -15,6 +15,20 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:users',
         link : '/users'
+    },
+    {
+        id   : 'accounting',
+        title: 'Contabilidad',
+        type : 'basic',
+        icon : 'heroicons_outline:book-open',
+        link : '/accounting'
+    },
+    {
+        id   : 'reservations',
+        title: 'Reservas',
+        type : 'basic',
+        icon : 'heroicons_outline:rectangle-stack',
+        link : '/reservations'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [

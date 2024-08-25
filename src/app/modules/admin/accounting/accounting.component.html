@@ -1,0 +1,208 @@
+<div class="flex min-w-0 flex-auto flex-col">
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+        <div>
+            <div
+                class="bg-card flex flex-auto flex-col overflow-hidden rounded-2xl shadow xl:col-span-2"
+            >
+                <div
+                    class="relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8"
+                >
+                    <!-- Loader -->
+                    @if (isLoading) {
+                        <div class="absolute inset-x-0 bottom-0">
+                            <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+                        </div>
+                    }
+                    <!-- Title -->
+                    <div class="text-4xl font-extrabold tracking-tight">Contabilidad</div>
+                    <!-- Actions -->
+                    <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
+                        <!-- Search -->
+                        <mat-form-field
+                            class="fuse-mat-dense fuse-mat-rounded min-w-64"
+                            [subscriptSizing]="'dynamic'"
+                        >
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:magnifying-glass'"
+                            ></mat-icon>
+                            <input
+                                matInput
+                                [formControl]="searchInputControl"
+                                [autocomplete]="'off'"
+                                [placeholder]="'Buscar cuentas'"
+                            />
+                        </mat-form-field>
+                        <!-- Add product button -->
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="addAccount()">
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2 mr-1">Agregar</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="mx-6 overflow-x-auto">
+                    <table
+                        class="w-full bg-transparent"
+                        mat-table
+                        matSort
+                        [dataSource]="recentTransactionsDataSource"
+                        [trackBy]="trackByFn"
+                        #usersTable
+                    >
+                        <ng-container matColumnDef="fecha">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Fecha
+                            </th>
+                            <td mat-cell *matCellDef="let account">
+                                <span
+                                    class="whitespace-nowrap pr-6"
+                                >
+                                    {{ account.fecha }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="descripcion">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Descripción
+                            </th>
+                            <td mat-cell *matCellDef="let account">
+                                <span class="whitespace-nowrap pr-6">
+                                    {{ account.descripcion}}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="tipo">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Tipo
+                            </th>
+                            <td mat-cell *matCellDef="let account">
+                                <span class="whitespace-nowrap pr-6">
+                                    {{ account.tipo }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="categoria">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Categoría
+                            </th>
+                            <td mat-cell *matCellDef="let account">
+                                <span
+                                    class="whitespace-nowrap pr-6">
+                                    {{ account.categoria }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="monto">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Monto
+                            </th>
+                            <td mat-cell *matCellDef="let account">
+                                <span
+                                    class="whitespace-nowrap pr-6">
+                                    {{ account.monto }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="estado">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Estado
+                            </th>
+                            <td mat-cell *matCellDef="let account">
+                                    <span
+                                        class="whitespace-nowrap leading-relaxed"
+                                    >@if (account.estado === 'pagado') {
+                                        <mat-icon
+                                            class="text-green-400 icon-size-5"
+                                            [svgIcon]="'heroicons_solid:check'"
+                                        ></mat-icon>
+                                    }
+                                        @if (account.estado === 'pendiente') {
+                                            <mat-icon
+                                                class="text-gray-400 icon-size-5"
+                                                [svgIcon]="'heroicons_solid:x-mark'"
+                                            ></mat-icon>
+                                        }</span
+                                    >
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="acciones">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Acciones
+                            </th>
+                            <td mat-cell *matCellDef="let account">
+                                <span
+                                    class="whitespace-nowrap pr-6 flex items-center">
+                                    <mat-icon
+                                        class="text-gray-400 icon-size-5 icon-hover edit"
+                                        svgIcon="heroicons_solid:pencil"
+                                        (click)="editAccount(account)"
+                                        style="margin-right: 12px;">
+                                    </mat-icon>
+                                    <mat-icon
+                                        class="text-gray-400 icon-size-5 icon-hover delete"
+                                        svgIcon="heroicons_solid:trash"
+                                        (click)="deleteAccount(account)">
+                                    </mat-icon>
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="accountingTableColumns"
+                        ></tr>
+                        <tr
+                            class="order-row h-16"
+                            mat-row
+                            *matRowDef="
+                                let row;
+                                columns: accountingTableColumns
+                            "
+                        ></tr>
+                    </table>
+                </div>
+                <!-- Paginador -->
+                <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

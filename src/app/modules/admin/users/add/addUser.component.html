@@ -4,16 +4,70 @@
         <mat-icon>close</mat-icon>
     </button>
 </div>
+
 <mat-dialog-content>
     <form>
-        <!-- Campos del formulario -->
+        <!-- Campo: Nombre -->
         <mat-form-field class="w-full">
             <mat-label>Nombre</mat-label>
-            <input matInput [(ngModel)]="user.name" name="name">
+            <input matInput [(ngModel)]="user.nombre" name="name" required>
         </mat-form-field>
-        <!-- Agrega otros campos según sea necesario -->
+
+        <!-- Campo: Tipo de Documento -->
+        <mat-form-field class="w-full">
+            <mat-label>Tipo de Documento</mat-label>
+            <mat-select [(ngModel)]="user.tipoDocumento" name="tipoDocumento" required>
+                <mat-option value="CC">Cédula de Ciudadanía</mat-option>
+                <mat-option value="TI">Tarjeta de Identidad</mat-option>
+                <!-- Agrega más opciones según corresponda -->
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Campo: Número de Documento -->
+        <mat-form-field class="w-full">
+            <mat-label>Número de Documento</mat-label>
+            <input matInput [(ngModel)]="user.numeroDocumento" name="numeroDocumento" required>
+        </mat-form-field>
+
+        <!-- Campo: Correo -->
+        <mat-form-field class="w-full">
+            <mat-label>Correo</mat-label>
+            <input matInput [(ngModel)]="user.correo" name="correo" type="email" required>
+        </mat-form-field>
+
+        <!-- Campo: Apartamento -->
+        <mat-form-field class="w-full">
+            <mat-label>Apartamento</mat-label>
+            <input matInput [(ngModel)]="user.apartamento" name="apartamento" required>
+        </mat-form-field>
+
+        <!-- Campo: Torre -->
+        <mat-form-field class="w-full">
+            <mat-label>Torre</mat-label>
+            <input matInput [(ngModel)]="user.torre" name="torre" required>
+        </mat-form-field>
+
+        <!-- Campo: Rol -->
+        <mat-form-field class="w-full">
+            <mat-label>Rol</mat-label>
+            <mat-select [(ngModel)]="user.rol" name="rol" required>
+                <mat-option value="admin">Administrador</mat-option>
+                <mat-option value="resident">Residente</mat-option>
+                <!-- Agrega más opciones según corresponda -->
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Campo: Estado -->
+        <mat-form-field class="w-full">
+            <mat-label>Estado</mat-label>
+            <mat-select [(ngModel)]="user.estado" name="estado" required>
+                <mat-option value="activo">Activo</mat-option>
+                <mat-option value="inactivo">Inactivo</mat-option>
+            </mat-select>
+        </mat-form-field>
     </form>
 </mat-dialog-content>
+
 <mat-dialog-actions align="end">
     <button mat-button (click)="close()">Cancelar</button>
     <button mat-button color="primary" (click)="save()">Guardar</button>
