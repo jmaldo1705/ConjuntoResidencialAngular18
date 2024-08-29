@@ -66,7 +66,7 @@ export class AddAccountComponent {
         this.dateAdapter.setLocale('es-ES');  // Establece el locale a español
         this.action = data.action;  // 'add' o 'edit'
         this.accounting = data.account || {};  // Si es agregar, inicia con un objeto vacío
-        this.accounting.fecha = this.accounting.fecha || new Date();  // Inicializa con la fecha actual si no hay valor
+        this.accounting.fecha = new Date(this.accounting.fecha) || new Date();  // Inicializa con la fecha actual si no hay valor
     }
 
     save(): void {
@@ -91,5 +91,25 @@ export class AddAccountComponent {
         this.accountingService.updateAccount(this.accounting).subscribe(response => {
             this.dialogRef.close(response);  // Cierra el diálogo y envía los datos de vuelta
         });
+    }
+
+    edit() {
+        // Este método debería preparar el modal para la edición
+        this.dialogRef.close(); // Cierra el modal actual
+        // Aquí podrías abrir otro modal en modo de edición o simplemente cambiar un flag
+    }
+
+    delete() {
+        if (this.accounting && this.accounting.id) {
+            this.accountingService.deleteAccount(this.accounting.id).subscribe({
+                next: () => {
+                    this.dialogRef.close();  // Cierra el modal después de la eliminación
+                    // Opcionalmente, podrías emitir un evento o actualizar una lista
+                },
+                error: (error) => {
+                    console.error('Error deleting the accounting record', error);
+                }
+            });
+        }
     }
 }

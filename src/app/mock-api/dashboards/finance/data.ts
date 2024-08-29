@@ -1630,7 +1630,7 @@ export const finance = {
     ],
     accounting: [
         {
-            fecha: '22/08/2024',
+            fecha: '01/28/2024',
             descripcion: 'Pago de Administración 2-907',
             tipo: 'Ingreso',
             categoria: 'Pago de Administración',

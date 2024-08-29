@@ -25,6 +25,12 @@
         "@angular/platform-browser-dynamic": "18.0.1",
         "@angular/router": "18.0.1",
         "@ngneat/transloco": "6.0.4",
+        "@fullcalendar/angular": "^6.1.14",
+        "@fullcalendar/core": "^6.1.14",
+        "@fullcalendar/daygrid": "^6.1.14",
+        "@fullcalendar/interaction": "^6.1.14",
+        "@fullcalendar/list": "^6.1.14",
+        "@fullcalendar/timegrid": "^6.1.14",
         "apexcharts": "3.49.1",
         "crypto-js": "4.2.0",
         "highlight.js": "11.9.0",
@@ -39,7 +45,7 @@
         "zone.js": "0.14.6"
     },
     "devDependencies": {
-        "@angular-devkit/build-angular": "18.0.2",
+        "@angular-devkit/build-angular": "^18.2.1",
         "@angular/cli": "18.0.2",
         "@angular/compiler-cli": "18.0.1",
         "@tailwindcss/typography": "0.5.13",

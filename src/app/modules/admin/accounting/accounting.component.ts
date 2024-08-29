@@ -196,8 +196,8 @@ export class AccountingComponent implements OnInit, AfterViewInit, OnDestroy {
 
     deleteAccount(account: any): void {
         this.accountingService.deleteAccount(account.id).subscribe({
-            next: () => console.log('Usuario eliminado correctamente'),
-            error: (err) => console.error('Error al eliminar el usuario', err)
+            next: () => console.log('Cuenta eliminada correctamente'),
+            error: (err) => console.error('Error al eliminar la cuenta', err)
         });
     }
 
@@ -245,7 +245,7 @@ export class AccountingComponent implements OnInit, AfterViewInit, OnDestroy {
                 followCursor: true,
                 theme: 'dark',
                 x: {
-                    format: 'MMM dd, yyyy',
+                    format: 'dd MMM, yyyy',
                 },
                 y: {
                     formatter: (value): string => value + '%',
