@@ -174,7 +174,7 @@ export class AccountingComponent implements OnInit, AfterViewInit, OnDestroy {
     openDialog(action: string, account?: any): void {
         const dialogRef = this.dialog.open(AddAccountComponent, {
             width: '90%',
-            maxWidth: '600px',
+            maxWidth: '1200px',
             data: { action, account }, // Enviamos los datos al dialog
             panelClass: 'custom-dialog-container' // Clase personalizada para estilos adicionales
         });

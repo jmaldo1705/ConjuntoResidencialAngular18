@@ -32,6 +32,7 @@ export const MY_FORMATS = {
 @Component({
     selector: 'app-account-form',
     templateUrl: './addAccount.component.html',
+    styleUrls: ['./addAccount.component.scss'],
     standalone: true,
     imports: [
         MatIcon,

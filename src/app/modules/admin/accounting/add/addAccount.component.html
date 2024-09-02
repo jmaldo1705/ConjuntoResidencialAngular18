@@ -7,6 +7,7 @@
 
 <mat-dialog-content>
     <form>
+        <div class="form-row">
         <!-- Campo: Nombre -->
         <mat-form-field class="w-full">
             <mat-label>Fecha</mat-label>
@@ -14,13 +15,13 @@
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-
         <!-- Campo: Tipo de Documento -->
         <mat-form-field class="w-full">
             <mat-label>Descripción</mat-label>
             <input matInput [(ngModel)]="accounting.descripcion" name="descripcion" required>
         </mat-form-field>
-
+        </div>
+        <div class="form-row">
         <!-- Campo: Número de Documento -->
         <mat-form-field class="w-full">
             <mat-label>Tipo</mat-label>
@@ -36,7 +37,8 @@
             <mat-label>Categoría</mat-label>
             <input matInput [(ngModel)]="accounting.categoria" name="categoria" required>
         </mat-form-field>
-
+        </div>
+        <div class="form-row">
         <!-- Campo: Apartamento -->
         <mat-form-field class="w-full">
             <mat-label>Monto</mat-label>
@@ -51,6 +53,7 @@
                 <mat-option value="pagado">Pagado</mat-option>
             </mat-select>
         </mat-form-field>
+        </div>
     </form>
 </mat-dialog-content>
 
