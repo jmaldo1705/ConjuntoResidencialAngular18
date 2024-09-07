@@ -1,0 +1,23 @@
+.mat-icon.icon-hover.edit:hover {
+  color: #1e90ff !important;
+}
+
+.mat-icon.icon-hover.delete:hover {
+  color: #ff4d4d !important;
+}
+
+.mat-icon.icon-hover {
+  cursor: pointer !important;
+}
+
+.custom-dialog-container {
+  padding: 0 !important;
+}
+@media (max-width: 600px) {
+  .custom-dialog-container .mat-dialog-container {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+}
+
+/*# sourceMappingURL=residents.component.css.map */

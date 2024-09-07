@@ -15,7 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { UsersService } from 'app/modules/admin/users/users.service';
+import { ResidentsService } from 'app/modules/admin/residents/residents.service';
 import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { MatFormField } from '@angular/material/form-field';
@@ -23,7 +23,7 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { AddUserComponent } from './add/addUser.component';
+import { AddResidentComponent } from './add/addResident.component';
 
 function getSpanishPaginatorIntl() {
     const paginatorIntl = new MatPaginatorIntl();
@@ -48,9 +48,9 @@ function getSpanishPaginatorIntl() {
 
 
 @Component({
-    selector: 'users',
-    templateUrl: './users.component.html',
-    styleUrls: ['./users.component.scss'],
+    selector: 'residents',
+    templateUrl: './residents.component.html',
+    styleUrls: ['./residents.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
@@ -75,7 +75,7 @@ function getSpanishPaginatorIntl() {
         MatPaginator,
     ],
 })
-export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ResidentsComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     searchInputControl = new FormControl();
@@ -85,14 +85,11 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     recentTransactionsDataSource: MatTableDataSource<any> =
         new MatTableDataSource();
     usersTableColumns: string[] = [
-        'nombre',
-        'tipoDocumento',
-        'numeroDocumento',
-        'correo',
-        'apartamento',
-        'torre',
-        'rol',
+        'unidadHabitacional',
+        'propietario',
+        'residente',
         'estado',
+        'tamano',
         'acciones',
     ];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -100,7 +97,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Constructor
      */
-    constructor(private usersService: UsersService, private dialog: MatDialog) {}
+    constructor(private residentsService: ResidentsService, private dialog: MatDialog) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -111,7 +108,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
      */
     ngOnInit(): void {
         // Get the data
-        this.usersService.data$
+        this.residentsService.data$
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((data) => {
                 // Store the data
@@ -119,13 +116,13 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
 
                 // Store the table data
                 this.recentTransactionsDataSource.data =
-                    data.users;
+                    data.residents;
 
                 // Prepare the chart data
                 this._prepareChartData();
             });
         // Refrescar los datos al iniciar
-        this.usersService.refreshData();
+        this.residentsService.refreshData();
         this.recentTransactionsDataSource.paginator = this.paginator;
     }
 
@@ -174,7 +171,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     openDialog(action: string, user?: any): void {
-        const dialogRef = this.dialog.open(AddUserComponent, {
+        const dialogRef = this.dialog.open(AddResidentComponent, {
             width: '90%',
             maxWidth: '1200px',
             data: { action, user }, // Enviamos los datos al dialog
@@ -183,12 +180,12 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                this.usersService.refreshData(); // Suponiendo que tienes un método para refrescar los datos
+                this.residentsService.refreshData(); // Suponiendo que tienes un método para refrescar los datos
             }
         });
     }
 
-    editUser(user: any): void {
+    editResident(user: any): void {
         this.openDialog('edit', user);
     }
 
@@ -196,8 +193,8 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
         this.openDialog('add');
     }
 
-    deleteUser(user: any): void {
-        this.usersService.deleteUser(user.id).subscribe({
+    deleteResident(user: any): void {
+        this.residentsService.deleteResident(user.id).subscribe({
             next: () => console.log('Usuario eliminado correctamente'),
             error: (err) => console.error('Error al eliminar el usuario', err)
         });

@@ -1,0 +1,7 @@
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px; /* Espacio entre los campos */
+}
+
+/*# sourceMappingURL=addResident.component.css.map */

@@ -17,6 +17,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/users'
     },
     {
+        id   : 'residents',
+        title: 'Unidadaes Residenciales',
+        type : 'basic',
+        icon : 'heroicons_outline:building-office-2',
+        link : '/residents'
+    },
+    {
         id   : 'accounting',
         title: 'Contabilidad',
         type : 'basic',
@@ -29,6 +36,27 @@ export const defaultNavigation: FuseNavigationItem[] = [
         type : 'basic',
         icon : 'heroicons_outline:rectangle-stack',
         link : '/reservations'
+    },
+    {
+        id   : 'documents',
+        title: 'Documentos',
+        type : 'basic',
+        icon : 'heroicons_outline:document',
+        link : '/documents'
+    },
+    {
+        id   : 'visitors',
+        title: 'Visitantes',
+        type : 'basic',
+        icon : 'heroicons_outline:user-group',
+        link : '/visitors'
+    },
+    {
+        id   : 'parking',
+        title: 'Parqueadero',
+        type : 'basic',
+        icon : 'heroicons_outline:rectangle-group',
+        link : '/parking'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [

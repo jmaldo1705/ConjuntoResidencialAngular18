@@ -15,7 +15,7 @@
                         </div>
                     }
                     <!-- Title -->
-                    <div class="text-4xl font-extrabold tracking-tight">Contabilidad</div>
+                    <div class="text-4xl font-extrabold tracking-tight">Unidades Residenciales</div>
                     <!-- Actions -->
                     <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
                         <!-- Search -->
@@ -31,7 +31,7 @@
                                 matInput
                                 [formControl]="searchInputControl"
                                 [autocomplete]="'off'"
-                                [placeholder]="'Buscar cuentas'"
+                                [placeholder]="'Buscar usuarios'"
                             />
                         </mat-form-field>
                         <!-- Add product button -->
@@ -39,7 +39,7 @@
                             class="ml-4"
                             mat-flat-button
                             [color]="'primary'"
-                            (click)="addAccount()">
+                            (click)="addUser()">
                             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                             <span class="ml-2 mr-1">Agregar</span>
                         </button>
@@ -54,81 +54,49 @@
                         [trackBy]="trackByFn"
                         #usersTable
                     >
-                        <ng-container matColumnDef="fecha">
+                        <ng-container matColumnDef="unidadHabitacional">
                             <th
                                 mat-header-cell
                                 mat-sort-header
                                 *matHeaderCellDef
                             >
-                                Fecha
+                                Unidad habitacional
                             </th>
-                            <td mat-cell *matCellDef="let account">
+                            <td mat-cell *matCellDef="let resident">
                                 <span
                                     class="whitespace-nowrap pr-6"
                                 >
-                                    {{ account.fecha | date: 'dd/MM/yyyy' }}
+                                    {{ resident.unidadHabitacional }}
                                 </span>
                             </td>
                         </ng-container>
 
-                        <ng-container matColumnDef="descripcion">
+                        <ng-container matColumnDef="propietario">
                             <th
                                 mat-header-cell
                                 mat-sort-header
                                 *matHeaderCellDef
                             >
-                                Descripción
+                                Propietario
                             </th>
-                            <td mat-cell *matCellDef="let account">
+                            <td mat-cell *matCellDef="let resident">
                                 <span class="whitespace-nowrap pr-6">
-                                    {{ account.descripcion}}
+                                    {{ resident.propietario}}
                                 </span>
                             </td>
                         </ng-container>
 
-                        <ng-container matColumnDef="tipo">
+                        <ng-container matColumnDef="residente">
                             <th
                                 mat-header-cell
                                 mat-sort-header
                                 *matHeaderCellDef
                             >
-                                Tipo
+                                Residente
                             </th>
-                            <td mat-cell *matCellDef="let account">
+                            <td mat-cell *matCellDef="let resident">
                                 <span class="whitespace-nowrap pr-6">
-                                    {{ account.tipo }}
-                                </span>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="categoria">
-                            <th
-                                mat-header-cell
-                                mat-sort-header
-                                *matHeaderCellDef
-                            >
-                                Categoría
-                            </th>
-                            <td mat-cell *matCellDef="let account">
-                                <span
-                                    class="whitespace-nowrap pr-6">
-                                    {{ account.categoria }}
-                                </span>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="monto">
-                            <th
-                                mat-header-cell
-                                mat-sort-header
-                                *matHeaderCellDef
-                            >
-                                Monto
-                            </th>
-                            <td mat-cell *matCellDef="let account">
-                                <span
-                                    class="whitespace-nowrap pr-6">
-                                    {{ account.monto }}
+                                    {{ resident.residente }}
                                 </span>
                             </td>
                         </ng-container>
@@ -141,22 +109,27 @@
                             >
                                 Estado
                             </th>
-                            <td mat-cell *matCellDef="let account">
-                                    <span
-                                        class="whitespace-nowrap leading-relaxed"
-                                    >@if (account.estado === 'pagado') {
-                                        <mat-icon
-                                            class="text-green-400 icon-size-5"
-                                            [svgIcon]="'heroicons_solid:check'"
-                                        ></mat-icon>
-                                    }
-                                        @if (account.estado === 'pendiente') {
-                                            <mat-icon
-                                                class="text-gray-400 icon-size-5"
-                                                [svgIcon]="'heroicons_solid:x-mark'"
-                                            ></mat-icon>
-                                        }</span
-                                    >
+                            <td mat-cell *matCellDef="let resident">
+                                <span
+                                    class="whitespace-nowrap pr-6">
+                                    {{ resident.estado }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="tamano">
+                            <th
+                                mat-header-cell
+                                mat-sort-header
+                                *matHeaderCellDef
+                            >
+                                Tamaño
+                            </th>
+                            <td mat-cell *matCellDef="let resident">
+                                <span
+                                    class="whitespace-nowrap pr-6">
+                                    {{ resident.tamano }} m<sup>2</sup>
+                                </span>
                             </td>
                         </ng-container>
 
@@ -168,25 +141,25 @@
                             >
                                 Acciones
                             </th>
-                            <td mat-cell *matCellDef="let account">
+                            <td mat-cell *matCellDef="let resident">
                                 <span
                                     class="whitespace-nowrap pr-6 flex items-center">
                                     <mat-icon
                                         class="text-gray-400 icon-size-5 icon-hover more"
                                         svgIcon="heroicons_solid:eye"
-                                        (click)="editAccount(account)"
+                                        (click)="editResident(resident)"
                                         style="margin-right: 12px;">
                                     </mat-icon>
                                     <mat-icon
                                         class="text-gray-400 icon-size-5 icon-hover edit"
                                         svgIcon="heroicons_solid:pencil"
-                                        (click)="editAccount(account)"
+                                        (click)="editResident(resident)"
                                         style="margin-right: 12px;">
                                     </mat-icon>
                                     <mat-icon
                                         class="text-gray-400 icon-size-5 icon-hover delete"
                                         svgIcon="heroicons_solid:trash"
-                                        (click)="deleteAccount(account)">
+                                        (click)="deleteResident(resident)">
                                     </mat-icon>
                                 </span>
                             </td>
@@ -194,14 +167,14 @@
 
                         <tr
                             mat-header-row
-                            *matHeaderRowDef="accountingTableColumns"
+                            *matHeaderRowDef="usersTableColumns"
                         ></tr>
                         <tr
                             class="order-row h-16"
                             mat-row
                             *matRowDef="
                                 let row;
-                                columns: accountingTableColumns
+                                columns: usersTableColumns
                             "
                         ></tr>
                     </table>

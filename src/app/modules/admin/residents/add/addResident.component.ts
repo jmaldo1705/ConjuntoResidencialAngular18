@@ -16,8 +16,8 @@ import { MatOption, MatSelect } from '@angular/material/select';
 
 @Component({
     selector: 'app-user-form',
-    templateUrl: './addUser.component.html',
-    styleUrls: ['./addUser.component.scss'],
+    templateUrl: './addResident.component.html',
+    styleUrls: ['./addResident.component.scss'],
     standalone: true,
     imports: [
         MatIcon,
@@ -34,17 +34,17 @@ import { MatOption, MatSelect } from '@angular/material/select';
         MatOption,
     ],
 })
-export class AddUserComponent {
-    user: any = {};  // Inicializa el usuario como un objeto vacío
+export class AddResidentComponent {
+    resident: any = {};  // Inicializa el usuario como un objeto vacío
     action: string;
 
     constructor(
-        public dialogRef: MatDialogRef<AddUserComponent>,
+        public dialogRef: MatDialogRef<AddResidentComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private userService: UsersService  // Inyecta el servicio de usuarios
     ) {
         this.action = data.action;  // 'add' o 'edit'
-        this.user = data.user || {};  // Si es agregar, inicia con un objeto vacío
+        this.resident = data.residents || {};  // Si es agregar, inicia con un objeto vacío
     }
 
     save(): void {
@@ -63,14 +63,14 @@ export class AddUserComponent {
 
     // Método para agregar un nuevo usuario
     private addUser(): void {
-        this.userService.addUser(this.user).subscribe(response => {
+        this.userService.addUser(this.resident).subscribe(response => {
             this.dialogRef.close(response);  // Cierra el diálogo y envía los datos de vuelta
         });
     }
 
     // Método para actualizar un usuario existente
     private updateUser(): void {
-        this.userService.updateUser(this.user).subscribe(response => {
+        this.userService.updateUser(this.resident).subscribe(response => {
             this.dialogRef.close(response);  // Cierra el diálogo y envía los datos de vuelta
         });
     }

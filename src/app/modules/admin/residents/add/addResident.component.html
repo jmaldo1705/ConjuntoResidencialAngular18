@@ -1,5 +1,5 @@
 <div class="flex justify-between items-center">
-    <h2 mat-dialog-title class="text-lg">{{ action === 'edit' ? 'Editar Usuario' : 'Agregar Usuario' }}</h2>
+    <h2 mat-dialog-title class="text-lg">{{ action === 'edit' ? 'Editar Unidad' : 'Agregar Unidad'}}</h2>
     <button mat-icon-button (click)="close()" class="text-gray-500">
         <mat-icon>close</mat-icon>
     </button>
@@ -11,7 +11,7 @@
             <!-- Campo: Tipo de Documento -->
             <mat-form-field class="w-full">
                 <mat-label>Tipo de Documento</mat-label>
-                <mat-select [(ngModel)]="user.tipoDocumento" name="tipoDocumento" required>
+                <mat-select [(ngModel)]="resident.tipoDocumento" name="tipoDocumento" required>
                     <mat-option value="CC">Cédula de Ciudadanía</mat-option>
                     <mat-option value="TI">Tarjeta de Identidad</mat-option>
                     <!-- Agrega más opciones según corresponda -->
@@ -21,7 +21,7 @@
             <!-- Campo: Número de Documento -->
             <mat-form-field class="w-full">
                 <mat-label>Número de Documento</mat-label>
-                <input matInput [(ngModel)]="user.numeroDocumento" name="numeroDocumento" required>
+                <input matInput [(ngModel)]="resident.numeroDocumento" name="numeroDocumento" required>
             </mat-form-field>
         </div>
 
@@ -29,13 +29,13 @@
             <!-- Campo: Nombre -->
             <mat-form-field class="w-full">
                 <mat-label>Nombre</mat-label>
-                <input matInput [(ngModel)]="user.nombre" name="name" required>
+                <input matInput [(ngModel)]="resident.nombre" name="name" required>
             </mat-form-field>
 
             <!-- Campo: Correo -->
             <mat-form-field class="w-full">
                 <mat-label>Correo</mat-label>
-                <input matInput [(ngModel)]="user.correo" name="correo" type="email" required>
+                <input matInput [(ngModel)]="resident.correo" name="correo" type="email" required>
             </mat-form-field>
         </div>
 
@@ -43,13 +43,13 @@
             <!-- Campo: Teléfono -->
             <mat-form-field class="w-full">
                 <mat-label>Teléfono</mat-label>
-                <input matInput [(ngModel)]="user.telefono" name="phone" required>
+                <input matInput [(ngModel)]="resident.telefono" name="phone" required>
             </mat-form-field>
 
             <!-- Campo: Núcleo -->
             <mat-form-field class="w-full">
                 <mat-label>Núcleo</mat-label>
-                <input matInput [(ngModel)]="user.nucleo" name="nucleo">
+                <input matInput [(ngModel)]="resident.nucleo" name="nucleo">
             </mat-form-field>
         </div>
 
@@ -57,13 +57,13 @@
             <!-- Campo: Fecha de registro -->
             <mat-form-field class="w-full">
                 <mat-label>Fecha de registro</mat-label>
-                <input matInput [(ngModel)]="user.fechaRegistro" name="fechaRegistro" readonly="true">
+                <input matInput [(ngModel)]="resident.fechaRegistro" name="fechaRegistro" readonly="true">
             </mat-form-field>
 
             <!-- Campo: Vehículos -->
             <mat-form-field class="w-full">
                 <mat-label>Vehículos</mat-label>
-                <input matInput [(ngModel)]="user.vehiculos" name="vehiculos">
+                <input matInput [(ngModel)]="resident.vehiculos" name="vehiculos">
             </mat-form-field>
         </div>
 
@@ -71,13 +71,13 @@
             <!-- Campo: Apartamento -->
             <mat-form-field class="w-full">
                 <mat-label>Unidad habitacional</mat-label>
-                <input matInput [(ngModel)]="user.apartamento" name="apartamento" required>
+                <input matInput [(ngModel)]="resident.apartamento" name="apartamento" required>
             </mat-form-field>
 
             <!-- Campo: Torre -->
             <mat-form-field class="w-full">
                 <mat-label>Torre</mat-label>
-                <input matInput [(ngModel)]="user.torre" name="torre" required>
+                <input matInput [(ngModel)]="resident.torre" name="torre" required>
             </mat-form-field>
         </div>
 
@@ -85,7 +85,7 @@
             <!-- Campo: Rol -->
             <mat-form-field class="w-full">
                 <mat-label>Rol</mat-label>
-                <mat-select [(ngModel)]="user.rol" name="rol" required>
+                <mat-select [(ngModel)]="resident.rol" name="rol" required>
                     <mat-option value="admin">Administrador</mat-option>
                     <mat-option value="resident">Residente</mat-option>
                     <!-- Agrega más opciones según corresponda -->
@@ -95,7 +95,7 @@
             <!-- Campo: Estado -->
             <mat-form-field class="w-full">
                 <mat-label>Estado</mat-label>
-                <mat-select [(ngModel)]="user.estado" name="estado" required>
+                <mat-select [(ngModel)]="resident.estado" name="estado" required>
                     <mat-option value="activo">Activo</mat-option>
                     <mat-option value="inactivo">Inactivo</mat-option>
                 </mat-select>

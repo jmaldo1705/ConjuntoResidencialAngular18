@@ -1628,6 +1628,16 @@ export const finance = {
         },
 
     ],
+    residents: [
+        {
+            unidadHabitacional: '2-907',
+            propietario: 'Jonathan Maldonado',
+            residente: 'Jonathan Maldonado',
+            estado: 'Ocupado',
+            tamano: '82',
+        },
+
+    ],
     accounting: [
         {
             fecha: '01/28/2024',
