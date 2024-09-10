@@ -8,96 +8,44 @@
 <mat-dialog-content>
     <form>
         <div class="form-row">
-            <!-- Campo: Tipo de Documento -->
             <mat-form-field class="w-full">
-                <mat-label>Tipo de Documento</mat-label>
+                <mat-label>Propietario</mat-label>
                 <mat-select [(ngModel)]="resident.tipoDocumento" name="tipoDocumento" required>
                     <mat-option value="CC">Cédula de Ciudadanía</mat-option>
                     <mat-option value="TI">Tarjeta de Identidad</mat-option>
-                    <!-- Agrega más opciones según corresponda -->
                 </mat-select>
             </mat-form-field>
 
-            <!-- Campo: Número de Documento -->
             <mat-form-field class="w-full">
-                <mat-label>Número de Documento</mat-label>
+                <mat-label>Inquilino</mat-label>
                 <input matInput [(ngModel)]="resident.numeroDocumento" name="numeroDocumento" required>
             </mat-form-field>
         </div>
 
         <div class="form-row">
-            <!-- Campo: Nombre -->
             <mat-form-field class="w-full">
-                <mat-label>Nombre</mat-label>
-                <input matInput [(ngModel)]="resident.nombre" name="name" required>
-            </mat-form-field>
-
-            <!-- Campo: Correo -->
-            <mat-form-field class="w-full">
-                <mat-label>Correo</mat-label>
-                <input matInput [(ngModel)]="resident.correo" name="correo" type="email" required>
-            </mat-form-field>
-        </div>
-
-        <div class="form-row">
-            <!-- Campo: Teléfono -->
-            <mat-form-field class="w-full">
-                <mat-label>Teléfono</mat-label>
+                <mat-label>Vehículos asociados</mat-label>
                 <input matInput [(ngModel)]="resident.telefono" name="phone" required>
             </mat-form-field>
 
-            <!-- Campo: Núcleo -->
             <mat-form-field class="w-full">
-                <mat-label>Núcleo</mat-label>
-                <input matInput [(ngModel)]="resident.nucleo" name="nucleo">
+                <mat-label>Tamaño</mat-label>
+                <input matInput [(ngModel)]="resident.telefono" name="phone" required>
             </mat-form-field>
         </div>
 
         <div class="form-row">
-            <!-- Campo: Fecha de registro -->
             <mat-form-field class="w-full">
-                <mat-label>Fecha de registro</mat-label>
-                <input matInput [(ngModel)]="resident.fechaRegistro" name="fechaRegistro" readonly="true">
+                <mat-label>Características</mat-label>
+                <input matInput [(ngModel)]="resident.correo" name="correo" type="email" required>
             </mat-form-field>
 
-            <!-- Campo: Vehículos -->
-            <mat-form-field class="w-full">
-                <mat-label>Vehículos</mat-label>
-                <input matInput [(ngModel)]="resident.vehiculos" name="vehiculos">
-            </mat-form-field>
-        </div>
-
-        <div class="form-row">
-            <!-- Campo: Apartamento -->
-            <mat-form-field class="w-full">
-                <mat-label>Unidad habitacional</mat-label>
-                <input matInput [(ngModel)]="resident.apartamento" name="apartamento" required>
-            </mat-form-field>
-
-            <!-- Campo: Torre -->
-            <mat-form-field class="w-full">
-                <mat-label>Torre</mat-label>
-                <input matInput [(ngModel)]="resident.torre" name="torre" required>
-            </mat-form-field>
-        </div>
-
-        <div class="form-row">
-            <!-- Campo: Rol -->
-            <mat-form-field class="w-full">
-                <mat-label>Rol</mat-label>
-                <mat-select [(ngModel)]="resident.rol" name="rol" required>
-                    <mat-option value="admin">Administrador</mat-option>
-                    <mat-option value="resident">Residente</mat-option>
-                    <!-- Agrega más opciones según corresponda -->
-                </mat-select>
-            </mat-form-field>
-
-            <!-- Campo: Estado -->
             <mat-form-field class="w-full">
                 <mat-label>Estado</mat-label>
                 <mat-select [(ngModel)]="resident.estado" name="estado" required>
-                    <mat-option value="activo">Activo</mat-option>
-                    <mat-option value="inactivo">Inactivo</mat-option>
+                    <mat-option value="activo">Disponible</mat-option>
+                    <mat-option value="inactivo">Ocupado</mat-option>
+                    <mat-option value="inactivo">Mantenimiento</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
