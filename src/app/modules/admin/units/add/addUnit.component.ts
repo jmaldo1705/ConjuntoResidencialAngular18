@@ -16,8 +16,8 @@ import { MatOption, MatSelect } from '@angular/material/select';
 
 @Component({
     selector: 'app-user-form',
-    templateUrl: './addResident.component.html',
-    styleUrls: ['./addResident.component.scss'],
+    templateUrl: './addUnit.component.html',
+    styleUrls: ['./addUnit.component.scss'],
     standalone: true,
     imports: [
         MatIcon,
@@ -34,12 +34,12 @@ import { MatOption, MatSelect } from '@angular/material/select';
         MatOption,
     ],
 })
-export class AddResidentComponent {
+export class AddUnitComponent {
     resident: any = {};  // Inicializa el usuario como un objeto vacío
     action: string;
 
     constructor(
-        public dialogRef: MatDialogRef<AddResidentComponent>,
+        public dialogRef: MatDialogRef<AddUnitComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private userService: UsersService  // Inyecta el servicio de usuarios
     ) {
