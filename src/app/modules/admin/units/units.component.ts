@@ -15,7 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ResidentsService } from 'app/modules/admin/residents/residents.service';
+import { UnitsService } from 'app/modules/admin/units/units.service';
 import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { MatFormField } from '@angular/material/form-field';
@@ -23,7 +23,7 @@ import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
-import { AddResidentComponent } from './add/addResident.component';
+import { AddUnitComponent } from './add/addUnit.component';
 
 function getSpanishPaginatorIntl() {
     const paginatorIntl = new MatPaginatorIntl();
@@ -48,9 +48,9 @@ function getSpanishPaginatorIntl() {
 
 
 @Component({
-    selector: 'residents',
-    templateUrl: './residents.component.html',
-    styleUrls: ['./residents.component.scss'],
+    selector: 'units',
+    templateUrl: './units.component.html',
+    styleUrls: ['./units.component.scss'],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
@@ -75,7 +75,7 @@ function getSpanishPaginatorIntl() {
         MatPaginator,
     ],
 })
-export class ResidentsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class UnitsComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     searchInputControl = new FormControl();
@@ -86,10 +86,13 @@ export class ResidentsComponent implements OnInit, AfterViewInit, OnDestroy {
         new MatTableDataSource();
     usersTableColumns: string[] = [
         'unidadHabitacional',
-        'propietario',
-        'residente',
+        'tipo',
+        'habitaciones',
+        'banios',
+        'tamanio',
         'estado',
-        'tamano',
+        'residente',
+        'propietario',
         'acciones',
     ];
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -97,7 +100,7 @@ export class ResidentsComponent implements OnInit, AfterViewInit, OnDestroy {
     /**
      * Constructor
      */
-    constructor(private residentsService: ResidentsService, private dialog: MatDialog) {}
+    constructor(private residentsService: UnitsService, private dialog: MatDialog) {}
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -116,10 +119,7 @@ export class ResidentsComponent implements OnInit, AfterViewInit, OnDestroy {
 
                 // Store the table data
                 this.recentTransactionsDataSource.data =
-                    data.residents;
-
-                // Prepare the chart data
-                this._prepareChartData();
+                    data.unitManagement;
             });
         // Refrescar los datos al iniciar
         this.residentsService.refreshData();
@@ -171,7 +171,7 @@ export class ResidentsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     openDialog(action: string, user?: any): void {
-        const dialogRef = this.dialog.open(AddResidentComponent, {
+        const dialogRef = this.dialog.open(AddUnitComponent, {
             width: '90%',
             maxWidth: '1200px',
             data: { action, user }, // Enviamos los datos al dialog
@@ -198,61 +198,5 @@ export class ResidentsComponent implements OnInit, AfterViewInit, OnDestroy {
             next: () => console.log('Usuario eliminado correctamente'),
             error: (err) => console.error('Error al eliminar el usuario', err)
         });
-    }
-
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Prepare the chart data from the data
-     *
-     * @private
-     */
-    private _prepareChartData(): void {
-        // Account balance
-        this.accountBalanceOptions = {
-            chart: {
-                animations: {
-                    speed: 400,
-                    animateGradually: {
-                        enabled: false,
-                    },
-                },
-                fontFamily: 'inherit',
-                foreColor: 'inherit',
-                width: '100%',
-                height: '100%',
-                type: 'area',
-                sparkline: {
-                    enabled: true,
-                },
-            },
-            colors: ['#A3BFFA', '#667EEA'],
-            fill: {
-                colors: ['#CED9FB', '#AECDFD'],
-                opacity: 0.5,
-                type: 'solid',
-            },
-            series: this.data.accountBalance.series,
-            stroke: {
-                curve: 'straight',
-                width: 2,
-            },
-            tooltip: {
-                followCursor: true,
-                theme: 'dark',
-                x: {
-                    format: 'MMM dd, yyyy',
-                },
-                y: {
-                    formatter: (value): string => value + '%',
-                },
-            },
-            xaxis: {
-                type: 'datetime',
-            },
-        };
     }
 }
