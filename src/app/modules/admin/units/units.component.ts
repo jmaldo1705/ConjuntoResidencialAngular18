@@ -1,106 +1,60 @@
-import { CurrencyPipe, DatePipe, NgClass } from '@angular/common';
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    Component,
-    OnDestroy,
-    OnInit,
-    ViewChild,
-    ViewEncapsulation,
-} from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { UnitsService } from 'app/modules/admin/units/units.service';
-import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
-import { debounceTime, Subject, takeUntil } from 'rxjs';
-import { MatFormField } from '@angular/material/form-field';
-import { ReactiveFormsModule, FormControl } from '@angular/forms';
-import { MatInput } from '@angular/material/input';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
-import { MatDialog } from '@angular/material/dialog';
-import { AddUnitComponent } from './add/addUnit.component';
-
-function getSpanishPaginatorIntl() {
-    const paginatorIntl = new MatPaginatorIntl();
-
-    paginatorIntl.itemsPerPageLabel = 'Elementos por página';
-    paginatorIntl.nextPageLabel = 'Página siguiente';
-    paginatorIntl.previousPageLabel = 'Página anterior';
-    paginatorIntl.firstPageLabel = 'Primera página';
-    paginatorIntl.lastPageLabel = 'Última página';
-
-    paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
-        if (length === 0 || pageSize === 0) {
-            return `0 de ${length}`;
-        }
-        const startIndex = page * pageSize;
-        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
-        return `${startIndex + 1} - ${endIndex} de ${length}`;
-    };
-
-    return paginatorIntl;
-}
-
+import { Component, OnInit } from '@angular/core';
+import { ColumnDefinition, dataTableComponent } from '../dataTable/dataTable.component';
 
 @Component({
     selector: 'units',
     templateUrl: './units.component.html',
-    styleUrls: ['./units.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    providers: [
-        { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }
-    ],
     imports: [
-        MatButtonModule,
-        MatIconModule,
-        MatMenuModule,
-        MatDividerModule,
-        NgApexchartsModule,
-        MatTableModule,
-        MatSortModule,
-        NgClass,
-        MatProgressBarModule,
-        CurrencyPipe,
-        DatePipe,
-        MatFormField,
-        ReactiveFormsModule,
-        MatInput,
-        MatPaginator,
+        dataTableComponent,
     ],
 })
-export class UnitsComponent implements OnInit, AfterViewInit, OnDestroy {
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild(MatSort) sort: MatSort;
-    searchInputControl = new FormControl();
-    isLoading: boolean = false;
-    data: any;
-    accountBalanceOptions: ApexOptions;
-    recentTransactionsDataSource: MatTableDataSource<any> =
-        new MatTableDataSource();
-    usersTableColumns: string[] = [
-        'unidadHabitacional',
-        'tipo',
-        'habitaciones',
-        'banios',
-        'tamanio',
-        'estado',
-        'residente',
-        'propietario',
-        'acciones',
-    ];
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-    /**
-     * Constructor
-     */
-    constructor(private residentsService: UnitsService, private dialog: MatDialog) {}
+export class UnitsComponent implements OnInit {
+    data = [
+        {
+            unidadHabitacional: '2-907',
+            tipo: 'Apartamento',
+            habitaciones: '3',
+            banios: '2',
+            tamanio: '82',
+            estado: 'Ocupado',
+            residente: 'Jonathan Maldonado',
+            propietario: 'Jonathan Maldonado',
+        },
+        {
+            unidadHabitacional: 'Casa 2',
+            tipo: 'Casa',
+            habitaciones: '4',
+            banios: '3',
+            tamanio: '120',
+            estado: 'Ocupado',
+            residente: 'Fulanito de Tal',
+            propietario: 'Juan Pérez',
+        },
+    ];
+
+    columns: ColumnDefinition[] = [
+        { key: 'unidadHabitacional', header: 'Unidad habitacional' },
+        { key: 'tipo', header: 'Tipo' },
+        { key: 'habitaciones', header: 'Habitaciones' },
+        { key: 'banios', header: 'Baños' },
+        {
+            key: 'tamanio',
+            header: 'Tamaño',
+            displayFn: (element) => `${element.tamanio} m²`
+        },
+        { key: 'estado', header: 'Estado' },
+        { key: 'residente', header: 'Residente' },
+        { key: 'propietario', header: 'Propietario' },
+        // 'acciones' se añadirá automáticamente en displayedColumns
+    ];
+
+    displayedColumns = this.columns.map(c => c.key).concat(['acciones']);
+
+    title = 'Unidades Residenciales';
+    isLoading = false;
+
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -110,93 +64,29 @@ export class UnitsComponent implements OnInit, AfterViewInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // Get the data
-        this.residentsService.data$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((data) => {
-                // Store the data
-                this.data = data;
 
-                // Store the table data
-                this.recentTransactionsDataSource.data =
-                    data.unitManagement;
-            });
-        // Refrescar los datos al iniciar
-        this.residentsService.refreshData();
-        this.recentTransactionsDataSource.paginator = this.paginator;
-    }
-
-    /**
-     * After view init
-     */
-    ngAfterViewInit(): void {
-        // Agrega el ordenamiento
-        this.recentTransactionsDataSource.sort = this.sort;
-        //Conectar la paginación
-        this.recentTransactionsDataSource.paginator = this.paginator;
-        //Conectar el buscador
-        this.searchInputControl.valueChanges
-            .pipe(debounceTime(300)) // Espera 300 ms después de que el usuario deje de escribir
-            .subscribe(value => {
-                this.recentTransactionsDataSource.filter = value.trim().toLowerCase();
-            });
-        // Configurar la función de filtro
-        this.recentTransactionsDataSource.filterPredicate = (data, filter) => {
-            const dataStr = Object.values(data).join(' ').toLowerCase();
-            return dataStr.includes(filter);
-        };
-    }
-
-    /**
-     * On destroy
-     */
-    ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
-        this._unsubscribeAll.next(null);
-        this._unsubscribeAll.complete();
     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Track by function for ngFor loops
-     *
-     * @param index
-     * @param item
-     */
-    trackByFn(index: number, item: any): any {
-        return item.id || index;
+    addUnit(): void {
+        //this.openDialog('add');
     }
 
-    openDialog(action: string, user?: any): void {
-        const dialogRef = this.dialog.open(AddUnitComponent, {
-            width: '90%',
-            maxWidth: '1200px',
-            data: { action, user }, // Enviamos los datos al dialog
-            panelClass: 'custom-dialog-container' // Clase personalizada para estilos adicionales
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                this.residentsService.refreshData(); // Suponiendo que tienes un método para refrescar los datos
-            }
-        });
+    editUnit(user: any): void {
+        //this.openDialog('edit', user);
     }
 
-    editResident(user: any): void {
-        this.openDialog('edit', user);
-    }
-
-    addUser(): void {
-        this.openDialog('add');
-    }
-
-    deleteResident(user: any): void {
-        this.residentsService.deleteResident(user.id).subscribe({
+    deleteUnit(user: any): void {
+        /*this.residentsService.deleteResident(user.id).subscribe({
             next: () => console.log('Usuario eliminado correctamente'),
             error: (err) => console.error('Error al eliminar el usuario', err)
-        });
+        });*/
+    }
+
+    viewUnit(user: any){
+
     }
 }

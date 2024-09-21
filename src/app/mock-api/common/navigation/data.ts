@@ -17,11 +17,11 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/users'
     },
     {
-        id   : 'residents',
+        id   : 'units',
         title: 'Unidadaes Residenciales',
         type : 'basic',
         icon : 'heroicons_outline:building-office-2',
-        link : '/residents'
+        link : '/units'
     },
     {
         id   : 'accounting',
@@ -56,6 +56,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'Parqueadero',
         type : 'basic',
         icon : 'heroicons_outline:rectangle-group',
+        link : '/parking'
+    },
+    {
+        id   : 'parking',
+        title: 'Gestión de Personal',
+        type : 'basic',
+        icon : 'heroicons_outline:users',
         link : '/parking'
     }
 ];

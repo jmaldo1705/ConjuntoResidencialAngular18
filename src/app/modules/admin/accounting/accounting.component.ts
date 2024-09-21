@@ -118,9 +118,6 @@ export class AccountingComponent implements OnInit, AfterViewInit, OnDestroy {
                 // Store the table data
                 this.recentTransactionsDataSource.data =
                     data.accounting;
-
-                // Prepare the chart data
-                this._prepareChartData();
             });
         // Refrescar los datos al iniciar
         this.accountingService.refreshData();
@@ -199,61 +196,5 @@ export class AccountingComponent implements OnInit, AfterViewInit, OnDestroy {
             next: () => console.log('Cuenta eliminada correctamente'),
             error: (err) => console.error('Error al eliminar la cuenta', err)
         });
-    }
-
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Private methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Prepare the chart data from the data
-     *
-     * @private
-     */
-    private _prepareChartData(): void {
-        // Account balance
-        this.accountBalanceOptions = {
-            chart: {
-                animations: {
-                    speed: 400,
-                    animateGradually: {
-                        enabled: false,
-                    },
-                },
-                fontFamily: 'inherit',
-                foreColor: 'inherit',
-                width: '100%',
-                height: '100%',
-                type: 'area',
-                sparkline: {
-                    enabled: true,
-                },
-            },
-            colors: ['#A3BFFA', '#667EEA'],
-            fill: {
-                colors: ['#CED9FB', '#AECDFD'],
-                opacity: 0.5,
-                type: 'solid',
-            },
-            series: this.data.accountBalance.series,
-            stroke: {
-                curve: 'straight',
-                width: 2,
-            },
-            tooltip: {
-                followCursor: true,
-                theme: 'dark',
-                x: {
-                    format: 'dd MMM, yyyy',
-                },
-                y: {
-                    formatter: (value): string => value + '%',
-                },
-            },
-            xaxis: {
-                type: 'datetime',
-            },
-        };
     }
 }

@@ -1628,13 +1628,26 @@ export const finance = {
         },
 
     ],
-    residents: [
+    unitManagement: [
         {
             unidadHabitacional: '2-907',
-            propietario: 'Jonathan Maldonado',
-            residente: 'Jonathan Maldonado',
+            tipo: 'Apartamento',
+            habitaciones: '3',
+            banios: '2',
+            tamanio: '82',
             estado: 'Ocupado',
-            tamano: '82',
+            residente: 'Jonathan Maldonado',
+            propietario: 'Jonathan Maldonado',
+        },
+        {
+            unidadHabitacional: 'Casa 2',
+            tipo: 'Casa',
+            habitaciones: '4',
+            banios: '3',
+            tamanio: '120',
+            estado: 'Ocupado',
+            residente: 'Fulanito de Tal',
+            propietario: 'Juan Pérez',
         },
 
     ],

@@ -1,0 +1,105 @@
+<!-- shared-data-table.component.html -->
+<div class="bg-card flex flex-auto flex-col overflow-hidden rounded-2xl shadow xl:col-span-2">
+    <div
+        class="relative flex flex-0 flex-col border-b px-6 py-8 sm:flex-row sm:items-center sm:justify-between md:px-8">
+        <!-- Loader -->
+        @if (isLoading) {
+            <div class="absolute inset-x-0 bottom-0">
+                <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+            </div>
+        }
+
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">{{ title }}</div>
+
+        <!-- Actions -->
+        <div class="mt-6 flex shrink-0 items-center sm:ml-4 sm:mt-0">
+            <!-- Search -->
+            <mat-form-field
+                class="fuse-mat-dense fuse-mat-rounded min-w-64"
+                [subscriptSizing]="'dynamic'"
+            >
+                <mat-icon
+                    class="icon-size-5"
+                    svgIcon="heroicons_solid:magnifying-glass"
+                ></mat-icon>
+                <input
+                    matInput
+                    [formControl]="searchInputControl"
+                    [autocomplete]="'off'"
+                    [placeholder]="filterPlaceholder"
+                />
+            </mat-form-field>
+
+            <!-- Add button -->
+            @if (showAddButton) {
+                <button
+                    class="ml-4"
+                    mat-flat-button
+                    [color]="'primary'"
+                    (click)="onAdd()"
+                >
+                    <mat-icon [svgIcon]="addButtonIcon"></mat-icon>
+                    <span class="ml-2 mr-1">{{ addButtonLabel }}</span>
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="mx-6 overflow-x-auto">
+        <table
+            class="w-full bg-transparent"
+            mat-table
+            matSort
+            [dataSource]="dataSource"
+            [trackBy]="trackByFn">
+            <!-- Dynamic columns -->
+            @for (column of columns; track column) {
+                <ng-container [matColumnDef]="column.key">
+                    <th
+                        mat-header-cell
+                        [mat-sort-header]="column.sortable !== false ? column.key : null"
+                        *matHeaderCellDef
+                    >
+                        {{ column.header }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="whitespace-nowrap pr-6">
+                            {{ column.displayFn ? column.displayFn(element) : element[column.key] }}
+                        </span>
+                    </td>
+                </ng-container>
+            }
+
+            <!-- Actions column -->
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef>
+                    Acciones
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="whitespace-nowrap pr-6 flex items-center">
+                    <mat-icon class="text-gray-400 icon-size-5 icon-hover more" svgIcon="heroicons_solid:eye"
+                              (click)="onView(element)" style="margin-right: 12px;">
+                    </mat-icon>
+                    <mat-icon class="text-gray-400 icon-size-5 icon-hover edit" svgIcon="heroicons_solid:pencil"
+                              (click)="onEdit(element)" style="margin-right: 12px;">
+                    </mat-icon>
+                    <mat-icon class="text-gray-400 icon-size-5 icon-hover delete" svgIcon="heroicons_solid:trash"
+                              (click)="onDelete(element)">
+                    </mat-icon>
+                  </span>
+                </td>
+            </ng-container>
+
+            <!-- Header and Row Definitions -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr
+                class="order-row h-16"
+                mat-row
+                *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <!-- Paginator -->
+    <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+</div>
